@@ -5,8 +5,12 @@
   "repository": "https://github.com/guifaxina/url-shortener.git",
   "author": "Guilherme Faxina <gamerstarbr7@hotmail.com>",
   "license": "MIT",
+  "scripts": {
+    "dev":"tsx watch src/main.ts"
+  },
   "dependencies": {
     "express": "^4.18.2",
+    "nanoid": "^4.0.0",
     "pg": "^8.8.0",
     "sequelize": "^6.27.0"
   },
