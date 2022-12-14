@@ -1,9 +1,14 @@
 import express from 'express';
-import database from './db/db.settings';
 import router from './routes/uri';
+import bodyParser from 'body-parser';
+// Database
+import database from './db/db.settings';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 
 app.use(router);
 
