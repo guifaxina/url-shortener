@@ -2,12 +2,16 @@ import { Request, Response } from "express";
 import urlSchema from "../model/url-schema";
 // ID Generator
 import { nanoid } from "nanoid";
+import { validateUrl } from "../utils/validate-regex";
 
 const BASE = "http://localhost:3000/";
 
 export const urlShortener = async (req: Request, res: Response) => {
   const url: string = req.body.url;
-
+  
+  if (!validateUrl(url)) 
+  return res.status(400).json({ status: "error", message: "URL not valid."})
+  
   const isUrlRegistered = await urlSchema.findOne({
     where: { longUrl: url },
   });
