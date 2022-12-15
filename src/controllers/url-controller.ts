@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import urlSchema from "../model/url-schema";
+import urlSchema from "../model/url-schema.js";
 // ID Generator
 import { nanoid } from "nanoid";
-import { validateUrl } from "../utils/validate-regex";
+import { validateUrl } from "../utils/validate-regex.js";
 
 const BASE = "http://localhost:3000/";
 

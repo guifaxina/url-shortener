@@ -1,6 +1,15 @@
-FROM postgres:alpine
+FROM node:16
 
-ENV POSTGRES_PASSWORD postgres
-ENV POSTGRES_USERNAME postgres
+EXPOSE 3000
 
-EXPOSE 5432
+WORKDIR /app
+
+COPY package.json yarn.lock ./
+
+RUN yarn install
+
+COPY . .
+
+RUN yarn build
+
+CMD ["node", "dist/server.js"]
