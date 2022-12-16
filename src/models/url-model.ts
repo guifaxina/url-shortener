@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
-import database from "../db/db.settings.js";
+import database from "../db/db-config.js";
 
-const urlSchema = database.define("Url", {
+const urlModel = database.define("Url", {
   shortUrl: {
     type: DataTypes.STRING,
   },
@@ -10,4 +10,4 @@ const urlSchema = database.define("Url", {
   },
 });
 
-export default urlSchema;
+export default urlModel;

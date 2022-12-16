@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
-import urlSchema from "../model/url-schema.js";
-// ID Generator
+import urlModel from "../models/url-model.js";
 import { nanoid } from "nanoid";
 import { validateUrl } from "../utils/validate-regex.js";
 
@@ -12,14 +11,14 @@ export const urlShortener = async (req: Request, res: Response) => {
   if (!validateUrl(url)) 
   return res.status(400).json({ status: "error", message: "URL not valid."})
   
-  const isUrlRegistered = await urlSchema.findOne({
+  const isUrlRegistered = await urlModel.findOne({
     where: { longUrl: url },
   });
 
   if (isUrlRegistered)
     res.send(`Your url shortened link: ${isUrlRegistered.dataValues.shortUrl}`);
   else {
-    const data = await urlSchema.create({
+    const data = await urlModel.create({
       shortUrl: BASE + nanoid(8),
       longUrl: url,
     });
@@ -34,7 +33,7 @@ export const urlShortener = async (req: Request, res: Response) => {
 export const urlRedirectioner = async (req: Request, res: Response) => {
   const shortUrlId = req.params.id;
 
-  const isShortUrlValid = await urlSchema.findOne({
+  const isShortUrlValid = await urlModel.findOne({
     where: { shortUrl: BASE + shortUrlId },
   });
 
@@ -45,6 +44,6 @@ export const urlRedirectioner = async (req: Request, res: Response) => {
 };
 
 export const urlFindAll = async (_: Request, res: Response) => {
-  const find = await urlSchema.findAll({});
+  const find = await urlModel.findAll({});
   res.status(200).json({ status: "success", message: "Successfully found URL list.", data: find});
 }

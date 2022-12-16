@@ -1,5 +1,4 @@
 import express from "express";
-// Controller
 import { urlFindAll, urlRedirectioner, urlShortener } from "../controllers/url-controller.js";
 
 const router = express.Router();
