@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import urlModel from "../models/url-model.js";
 import { nanoid } from "nanoid";
 import { validateUrl } from "../utils/validate-regex.js";
+import redis from "../databases/redis-config.js";
 
 const BASE = "http://localhost:3000/";
 
@@ -9,14 +10,23 @@ export const urlShortener = async (req: Request, res: Response) => {
   const url: string = req.body.url;
   
   if (!validateUrl(url)) 
-  return res.status(400).json({ status: "error", message: "URL not valid."})
+  res.status(400).json({ status: "error", message: "URL not valid."})
   
+  const cachedShortUrl = await redis.get('url');
+  if (cachedShortUrl) {
+    return res.send(`Your url shortened link: ${cachedShortUrl}`)
+  }
+
   const isUrlRegistered = await urlModel.findOne({
     where: { longUrl: url },
   });
 
-  if (isUrlRegistered)
-    res.send(`Your url shortened link: ${isUrlRegistered.dataValues.shortUrl}`);
+  if (isUrlRegistered) {
+    const shortUrl = isUrlRegistered.dataValues.shortUrl
+    redis.setEx('url', 300, JSON.stringify(shortUrl));
+    
+    return res.send(`Your url shortened link: ${shortUrl}`);
+  }
   else {
     const data = await urlModel.create({
       shortUrl: BASE + nanoid(8),

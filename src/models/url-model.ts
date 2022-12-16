@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import database from "../db/db-config.js";
+import database from "../databases/pg-config.js";
 
 const urlModel = database.define("Url", {
   shortUrl: {
