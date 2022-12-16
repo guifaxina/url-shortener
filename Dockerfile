@@ -1,4 +1,4 @@
-FROM node:16
+FROM node:16-alpine
 
 EXPOSE 3000
 
@@ -12,4 +12,4 @@ COPY . .
 
 RUN yarn build
 
-CMD ["node", "dist/server.js"]
+CMD ["yarn", "start"]
