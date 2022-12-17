@@ -10,10 +10,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(router);
 
-app.listen(PORT, async () => {
+(async () => {
   await redis.connect();
   console.log('Redis connection established.')
   await database.sync();
   console.log('Postgres connection established.')
+})();
+
+app.listen(PORT, async () => {
   console.log(`Server running on port: ${PORT}.`);
 });
