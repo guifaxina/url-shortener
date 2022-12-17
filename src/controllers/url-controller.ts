@@ -47,7 +47,7 @@ export const urlRedirectioner = async (req: Request, res: Response) => {
     where: { shortUrl: BASE + shortUrlId },
   });
 
-  if (isShortUrlValid) 
+  if (isShortUrlValid)
   res.redirect(`${isShortUrlValid.dataValues.longUrl}`);
   else
   res.status(404).json({ status: "error", message: "Invalid path, url not found." });
