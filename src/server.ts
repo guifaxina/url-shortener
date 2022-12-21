@@ -12,11 +12,9 @@ app.use(router);
 
 (async () => {
   await redis.connect();
-  console.log('Redis connection established.')
+  console.log('Redis connection established.');
   await database.sync();
-  console.log('Postgres connection established.')
+  console.log('Postgres connection established.');
 })();
 
-app.listen(PORT, async () => {
-  console.log(`Server running on port: ${PORT}.`);
-});
+app.listen(PORT, () => console.log(`Server running on port: ${PORT}.`));

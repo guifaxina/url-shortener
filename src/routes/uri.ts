@@ -3,7 +3,7 @@ import { urlFindAll, urlRedirectioner, urlShortener } from "../controllers/url-c
 
 const router = express.Router();
 
-router.get("/health-check", (_, res) => res.status(200).json({ status: 'success', message: 'Server working'}));
+router.get("/health-check", (_, res) => res.status(200).json({ status: "success", message: "Server working"}));
 router.get("/get-urls", urlFindAll);
 router.get("/:id", urlRedirectioner)
 

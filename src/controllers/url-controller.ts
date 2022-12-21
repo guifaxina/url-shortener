@@ -22,7 +22,7 @@ export const urlShortener = async (req: Request, res: Response) => {
   });
 
   if (isUrlRegistered) {
-    const shortUrl = isUrlRegistered.dataValues.shortUrl
+    const shortUrl: string = isUrlRegistered.dataValues.shortUrl
     redis.setEx('url', 300, JSON.stringify(shortUrl));
     
     return res.send(`Your url shortened link: ${shortUrl}`);
